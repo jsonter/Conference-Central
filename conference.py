@@ -595,7 +595,7 @@ class ConferenceApi(remote.Service):
                       path='conference/{websafeConferenceKey}',
                       http_method='POST', name='registerForConference')
     def registerForConference(self, request):
-        """Register user for selected conference."""
+        """Register user for selected conference (by websafeConferenceKey)."""
         return self._conferenceRegistration(request)
 
 
@@ -603,7 +603,8 @@ class ConferenceApi(remote.Service):
                       path='conference/{websafeConferenceKey}',
                       http_method='DELETE', name='unregisterFromConference')
     def unregisterFromConference(self, request):
-        """Unregister user for selected conference."""
+        """Unregister user for selected conference (by
+        websafeConferenceKey)."""
         return self._conferenceRegistration(request, reg=False)
 
 
@@ -748,7 +749,8 @@ class ConferenceApi(remote.Service):
                       path='getConferenceSessions/{websafeConferenceKey}',
                       http_method='POST', name='getConferenceSessions')
     def getConferenceSessions(self, request):
-        """Return sessions for selected conference."""
+        """Return sessions for selected conference (by 
+        websafeConferenceKey)."""
         # get conference key
         conf = ndb.Key(urlsafe=request.websafeConferenceKey).get()
         if not conf:
@@ -769,7 +771,8 @@ class ConferenceApi(remote.Service):
                       '/{typeOfSession}', http_method='POST',
                       name='getConferenceSessionsByType')
     def getConferenceSessionsByType(self, request):
-        """Return sessions for selected conference and session type."""
+        """Return sessions for selected conference and session type 
+        (by websafeConferenceKey)."""
         # get conference key
         conf = ndb.Key(urlsafe=request.websafeConferenceKey).get()
         if not conf:
@@ -791,7 +794,7 @@ class ConferenceApi(remote.Service):
                       path='SessionsBySpeaker/{speaker}',
                       http_method='POST', name='getSessionsBySpeaker')
     def getSessionsBySpeaker(self, request):
-        """Return sessions for selected speaker."""
+        """Return sessions for selected speaker (by Speaker)."""
         # query sessions for those with matching speaker
         sessions = Session.query()
         filteredSessions = sessions.filter(Session.speaker == request.speaker)
@@ -804,8 +807,8 @@ class ConferenceApi(remote.Service):
                       path='SessionsWithHighlight/{highlight}',
                       http_method='POST', name='getSessionsWithHighlight')
     def getSessionsWithHighlight(self, request):
-        """Return sessions with requested highlights."""
-        # query sessions for those with matching highlights
+        """Return sessions with requested highlights (by highlight)."""
+        # query sessions for those with matching highlight
         sessions = Session.query()
         filteredSessions = sessions.filter(Session.highlights ==
                                            request.highlight)
@@ -820,7 +823,7 @@ class ConferenceApi(remote.Service):
                     name='getSessionsOnDateWithMaxDuration')
     def getSessionsOnDateWithMaxDuration(self, request):
         """Return sessions on the requested date with the maximum requested
-        duration."""
+        duration (by date and duration)."""
         # query sessions for those with matching date and max durations
         sessions = Session.query()
         filteredSessions = sessions.filter(Session.date ==
@@ -860,7 +863,7 @@ class ConferenceApi(remote.Service):
         # start time
         filteredSessions2 = []
         for sess in filteredSessions:
-            if sess.startTime not None and sess.startTime <= filterTime:
+            if sess.startTime != None and sess.startTime <= filterTime:
                 filteredSessions2.append(sess)
 
         # return set of Sessionform objects per Session
@@ -932,7 +935,7 @@ class ConferenceApi(remote.Service):
                       path='session/{websafeSessionKey}',
                       http_method='POST', name='addSessionToWishlist')
     def addSessionToWishlist(self, request):
-        """Add session to user wishlist."""
+        """Add session to user wishlist (by websafeSessionKey)."""
         return self._sessionWishlist(request)
 
 
@@ -940,7 +943,7 @@ class ConferenceApi(remote.Service):
                       path='session/{websafeSessionKey}',
                       http_method='DELETE', name='removeSessionFromWishlist')
     def removeSessionFromWishlist(self, request):
-        """Remove session from user wishlist."""
+        """Remove session from user wishlist (by websafeSessionKey)."""
         return self._sessionWishlist(request, save=False)
 
 
