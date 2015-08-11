@@ -50,7 +50,7 @@ The difficulty in solving this query in the NDB Datastore is caused by the limit
 
 Ordinarily I would apply these 2 filters to the query:
 
-'''
+```python
         # query sessions for those that DO NOT match the type of session
         sessions = Session.query()
         # order session query by inequality filter (type of session)
@@ -59,12 +59,12 @@ Ordinarily I would apply these 2 filters to the query:
                                            request.typeOfSession)
         filteredSessions2 = filteredSessions.filter(Session.startTime <=
         											request.startTime)
-'''
+```
 Because of the current NDB query limitation of only 1 inequality filter I used the following process.
 
 Use 1 inequality NDB filter (the type of session), and then manually filter out the other criteria (start time) by iterating over the returned filtered query and only adding the records that pass this 2nd criteria to a new array to return:
 
-'''
+```python
         # query sessions for those that DO NOT match the type of session
         sessions = Session.query()
         # order session query by inequality filter (type of session)
@@ -78,7 +78,7 @@ Use 1 inequality NDB filter (the type of session), and then manually filter out 
         for sess in filteredSessions:
             if sess.startTime not None and sess.startTime <= filterTime:
                 filteredSessions2.append(sess)
-'''
+```
 
 ### Task 4
 
