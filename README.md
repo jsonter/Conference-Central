@@ -1,5 +1,7 @@
 App Engine application for the Udacity training course.
 
+Link: https://conferencecentral-985.appspot.com/#/
+
 ## Products
 - [App Engine][1]
 
